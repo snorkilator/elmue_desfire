@@ -1,4 +1,4 @@
-#define baudRate 115200
+#define BAUD_RATE 115200
 
 #ifndef UTILS_H
 #define UTILS_H
@@ -59,7 +59,7 @@ public:
     // Teensy ignores the baudrate parameter (only for older Arduino boards)
     static inline void Begin(uint32_t u32_Baud) 
     {
-        Serial.begin(baudRate);
+        Serial.begin(BAUD_RATE);
     }
     // returns how many characters the user has typed in the Terminal program on the PC which have not yet been read with Read()
     static inline int Available()
