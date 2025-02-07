@@ -1,4 +1,7 @@
 #define LED_BUILTIN 12
+
+
+
 /**************************************************************************
     
   @author   Elmü
@@ -184,6 +187,34 @@ struct kCard
     eCardType e_CardType;    
 };
 
+
+void InitReader(bool b_ShowError);
+void FlashLED(eLED e_LED, int s32_Interval);
+void SetLED(eLED e_LED);
+bool ReadKeyboardInput();
+void OnCommandReceived(bool b_PasswordValid);
+bool ParseParameter(char* s8_Command, char** ps8_Parameter, int minLength, int maxLength);
+void AddCardToEeprom(const char* s8_UserName);
+void ClearEeprom();
+bool WaitForKeyYesNo();
+bool WaitForCard(kUser* pk_User, kCard* pk_Card);
+bool ReadCard(byte u8_UID[8], kCard* pk_Card);
+bool IsDesfireTimeout();
+void OpenDoor(uint64_t u64_ID, kCard* pk_Card, uint64_t u64_StartTick);
+void ActivateRelais(byte u8_Flags);
+// uint32_t MeasureVoltage(); // Commented out in the provided code
+void CheckOpenButton();
+
+#if USE_DESFIRE
+bool AuthenticatePICC(byte* pu8_KeyVersion);
+bool GenerateDesfireSecrets(kUser* pk_User, DESFireKey* pi_AppMasterKey, byte u8_StoreValue[16]);
+bool CheckDesfireSecret(kUser* pk_User);
+bool ChangePiccMasterKey();
+bool StoreDesfireSecret(kUser* pk_User);
+bool RestoreDesfireCard();
+bool MakeRandomCard();
+#endif // USE_DESFIRE
+
 // global variables
 char       gs8_CommandBuffer[500];    // Stores commands typed by the user via Terminal and the password
 uint32_t   gu32_CommandPos   = 0;     // Index in gs8_CommandBuffer
@@ -191,6 +222,8 @@ uint64_t   gu64_LastPasswd   = 0;     // Timestamp when the user has enetered th
 uint64_t   gu64_LastID       = 0;     // The last card UID that has been read by the RFID reader  
 bool       gb_InitSuccess    = false; // true if the PN532 has been initialized successfully
 eBattCheck ge_BattCheck      = BATT_OK;
+
+
 
 void setup() 
 {
