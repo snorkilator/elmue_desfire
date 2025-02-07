@@ -12,7 +12,7 @@
 #define USERMANAGER_H
 
 #include "Utils.h"
-#include <EEPROM.h>
+#include "EEPROM.h"
 
 // Defines the maximum characters that can be stored for a user name + terminating zero character.
 // The smaller this value, the more users fit into the EEPROM.
