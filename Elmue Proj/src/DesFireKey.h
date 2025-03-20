@@ -14,6 +14,7 @@
 
 #include "Buffer.h"
 
+// this is a binary enum that is passed into the enc/decr function to tell that function which function to perform on the input
 enum DESFireCipher
 {
     KEY_ENCIPHER = 0,

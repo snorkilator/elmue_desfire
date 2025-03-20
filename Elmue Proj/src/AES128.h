@@ -9,7 +9,10 @@ class AES : public DESFireKey
 public:
     AES();
     ~AES();
+    // theory: you set the key that encodes and decodes using this function
     bool SetKeyData(const byte* u8_Key, int s32_KeySize, byte u8_Version);
+    // theory: once setkeydata is called, you just need to call this function to encrypt/decrypt data
+    
     bool CryptDataBlock(byte* u8_Out, const byte* u8_In, DESFireCipher e_Cipher);
     
 private:

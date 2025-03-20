@@ -117,6 +117,7 @@ void AES::aes_enc_dec(unsigned char state[16], unsigned char key[16], unsigned c
   unsigned char buf1, buf2, buf3, buf4, round, i;
    
   // In case of decryption
+  // theory: dir will contain either a 0 (encryption) or 1 (decryption), based on the enum from DesFireKey.h
   if (dir) {
     // compute the last key of encryption before starting the decryption
     for (round = 0 ; round < 10; round++) {
@@ -268,6 +269,7 @@ bool AES::SetKeyData(const byte* u8_Key, int s32_KeySize, byte u8_Version)
 }
 
 // 1 block = 16 bytes
+// returns false if the key is not set. The key must be set with SetKeyData() before calling this function.
 bool AES::CryptDataBlock(byte* u8_Out, const byte* u8_In, DESFireCipher e_Cipher)
 {
     if (ms32_KeySize != 16)
@@ -277,6 +279,7 @@ bool AES::CryptDataBlock(byte* u8_Out, const byte* u8_In, DESFireCipher e_Cipher
     byte u8_TempKey[16];
     memcpy(u8_TempKey, mu8_Key, 16);
   
+    // theory: Copy the input data to the output buffer. This is necessary because the encryption is done in place.
     memcpy(u8_Out, u8_In, 16);
     aes_enc_dec(u8_Out, u8_TempKey, e_Cipher);
     return true;
